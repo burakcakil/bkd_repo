@@ -1,0 +1,365 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="tr"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="tr"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="tr"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 ie-lt10 no-js" lang="tr"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="tr"><!--<![endif]-->
+
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="../js/i18n-tr.js"></script>
+	<meta charset="utf-8">
+	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+
+	<title>Bilim Kahramanları Derneği</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="favicon.ico" />
+  <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&subset=latin,latin-ext' rel='stylesheet prefetch' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Oswald:300,400,700&subset=latin,latin-ext' rel='stylesheet prefetch' type='text/css'>
+	<link rel="stylesheet" href="assets/css/reset.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+
+
+<style type="text/css">
+
+input[type="text"], input[type="url"], input[type="email"], input[type="number"], input[type="tel"],select{
+	border: solid 1px black;
+	width:250px;
+	height:35px;
+	font-size: 10pt;
+	border-radius: 10px;
+	padding-left: 5px;
+}
+
+
+textarea{
+	border: solid 1px black;
+	width:500px;
+	height:300px;
+	font-size: 10pt;
+	border-radius: 10px;
+	padding-left: 5px;
+}
+
+table, table tr td{
+	margin:5px;
+	padding:5px;
+}
+
+legend{
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+fieldset{
+	border: solid 1px black;
+	border-radius: 10px;
+}
+</style>
+
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+
+<body >
+	<div id="wrapper" style="position: absolute; top: 0px; left:0px; background-color:white; width:100%; height:100%;">
+	<div style="position:relative; top: 30px; width: 800px; margin-left: auto; margin-right: auto;"><img src="ybi_logo.png"/></div>
+	<div style="position:relative; top: 30px; width: 800px; margin-left: auto; margin-right: auto;"><h1 style="font-weight: bold; font-size: 20pt;">Yıln Bilim İnsanı Ödülleri Başvuru Formu</h1></div>
+	<div ng-app="myApp" ng-controller="myCtrl" style="position:relative; top: 40px; background-color:#dddddd;  width:800px; border-radius:15px; padding:10px; margin-left:auto; margin-right:auto;">
+		<form name="form" enctype="multipart/form-data" id="form" ng-submit="submit()" novalidate>
+      <div>Bu başvuruda bulunmakla;<br>
+        <ul>
+          <li>Bilim Kahramanları Derneği’nin 2017 Genç Bilim İnsanı Ödülleri esaslarını okuduğumu,</li>
+          <li>Ödül değerlendirme sürecinde yapılan tüm değerlendirme ve oluşturulan görüşlerin gizli olduğunu, kabul ve taahhüt ederim. </li>
+        </ul>
+      </div>
+      <br>
+      <label><input type="checkbox" name="kabul" value="Kabul Ediyorum" required><span>Kabul Ediyorum</span></label>
+      <br>
+      <br>
+      <fieldset>
+        <legend>Önemli Not</legend>
+      <div style="font-weight:bold;">
+        <b>Güncel detaylı özgeçmişinizi, bu <a href="http://bilimkahramanlari.org/yilinbiliminsani/ozgecmis/cv.docx">linkte</a> yer alan örneğe göre İngilizce ya da Türkçe olarak düzenleyip, JPEG veya PNG formatında fotoğrafınız ile birlikte <a href="mailto:ybi@bilimkahramanlari.org">ybi@bilimkahramanlari.org</a> adresine göndermenizi rica ederiz.</b>
+      </div>
+    </fieldset>
+    <fieldset>
+    <legend>Kişisel bilgiler</legend>
+    <table width="100%">
+    <tr>
+      <td>Fotoğraf: (3 MB boyutu geçmemelidir.) <input type="file" accept="image/*" name="fotograf" file-model="files1" ng-model="fotograf" required>
+          <span style="color:red" ng-show="sizeLimitExceeded">Fotoğraf boyutu 3 MB' ı geçmemelidir.</span>
+      </td>
+    </tr>
+    <tr>
+      <td>Güncel detaylı özgeçmiş (<a href="http://bilimkahramanlari.org/yilinbiliminsani/ozgecmis/cv.docx">Örnek</a>): <input type="file" name="ozgecmis" ng-model="ozgecmis" file-model="files2" required /></td>
+    </tr>
+    <tr>
+        <td>
+          <input ng-model="fields.unvan" placeholder="Unvan" type="text" id="unvan" name="unvan" required/>
+          <span style="color:red" ng-show="form.unvan.$dirty && form.unvan.$invalid">
+            <span ng-show="form.unvan.$error.required">Unvan gereklidir.</span>
+          </span>
+        </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.adi" placeholder="Adı*" type="text" id="ad" name="ad" required />
+        <span style="color:red" ng-show="form.ad.$dirty && form.ad.$invalid">
+          <span ng-show="form.ad.$error.required">Ad gereklidir.</span>
+        </span></td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.soyadi" placeholder="Soyadı*" type="text" id="soyad" name="soyad" required />
+        <span style="color:red" ng-show="form.soyad.$dirty && form.soyad.$invalid">
+          <span ng-show="form.soyad.$error.required">Soyad gereklidir.</span>
+        </span></td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.dog_tar" placeholder="Doğum Tarihi*" type="text" id="dogum_tarihi" name="dogum_tarihi" ng-readonly="true" required/>
+        <span style="color:red" ng-show="form.dogum_tarihi.$dirty && form.dogum_tarihi.$invalid">
+          <span ng-show="form.dogum_tarihi.$error.required">Doğum Tarihi gereklidir.</span>
+        </span>
+      </td>
+      <!--<td><md-datepicker ng-model="fields.bdate" md-placeholder="Enter date" md-open-on-focus=""></md-datepicker></td>-->
+    </tr>
+    <tr>
+      <td>
+        <select ng-model="fields.dog_yer" id="dogum_yeri" name="dogum_yeri" required>
+          <option value="">-Doğum Yeri*-</option>
+          <option value="1">Adana</option><option value="2">Adıyaman</option><option value="3">Afyonkarahisar</option><option value="4">Ağrı</option><option value="5">Aksaray</option><option value="6">Amasya</option><option value="7">Ankara</option><option value="8">Antalya</option><option value="9">Ardahan</option><option value="10">Artvin</option><option value="11">Aydın</option><option value="12">Balıkesir</option><option value="13">Bartın</option><option value="14">Batman</option><option value="15">Bayburt</option><option value="16">Bilecik</option><option value="17">Bingöl</option><option value="18">Bitlis</option><option value="19">Bolu</option><option value="20">Burdur</option><option value="21">Bursa</option><option value="22">Çanakkale</option><option value="23">Çankırı</option><option value="24">Çorum</option><option value="25">Denizli</option><option value="26">Diyarbakır</option><option value="27">Edirne</option><option value="28">Elazığ</option><option value="29">Erzincan</option><option value="30">Erzurum</option><option value="31">Eskişehir</option><option value="32">Gaziantep</option><option value="33">Giresun</option><option value="34">Gümüşhane</option><option value="35">Hakkari</option><option value="36">Hatay</option><option value="37">Mersin</option><option value="38">Iğdır</option><option value="39">Isparta</option><option value="40">İstanbul</option><option value="41">İzmir</option><option value="42">Kahramanmaraş</option><option value="43">Karaman</option><option value="44">Kars</option><option value="45">Kastamonu</option><option value="46">Kayseri</option><option value="47">Kırıkkale</option><option value="48">Kırklareli</option><option value="49">Kırşehir</option><option value="50">Kocaeli</option><option value="51">Konya</option><option value="52">Kütahya</option><option value="53">Malatya</option><option value="54">Manisa</option><option value="55">Mardin</option><option value="56">Muğla</option><option value="57">Muş</option><option value="58">Nevşehir</option><option value="59">Niğde</option><option value="60">Ordu</option><option value="61">Rize</option><option value="62">Sakarya</option><option value="63">Samsun</option><option value="64">Siirt</option><option value="65">Sinop</option><option value="66">Sivas</option><option value="67">Şırnak</option><option value="68">Tekirdağ</option><option value="69">Tokat</option><option value="70">Trabzon</option><option value="71">Tunceli</option><option value="72">Şanlıurfa</option><option value="73">Uşak</option><option value="74">Van</option><option value="75">Yozgat</option><option value="76">Zonguldak</option><option value="77">Düzce</option><option value="78">Karabük</option><option value="79">Yalova</option><option value="80">Kilis</option><option value="81">Osmaniye</option><option value="82">Diğer</option>
+        </select>
+        <span style="color:red" ng-show="form.dogum_yeri.$dirty && form.dogum_yeri.$invalid">
+          <span ng-show="form.dogum_yeri.$error.required">Doğum Yeri gereklidir.</span>
+        </span>
+      </td>
+        <tr>
+      <td><input ng-model="fields.meslek" placeholder="Meslek*" type="text" id="meslek" name="meslek" required/>
+        <span style="color:red" ng-show="form.meslek.$dirty && form.meslek.$invalid">
+          <span ng-show="form.meslek.$error.required">Meslek gereklidir.</span>
+        </span></td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.eposta" placeholder="E-Posta Adresi*" type="email" id="eposta" name="eposta" required/>
+        <span style="color:red" ng-show="form.eposta.$dirty && form.eposta.$invalid">
+          <span ng-show="form.eposta.$error.required">E-posta adresi gereklidir.</span>
+          <span ng-show="form.eposta.$error.email">Geçersiz e-posta adresi.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.tel_ev_is" placeholder="Telefon (Ev/İş) (xxxxxxxxxx)" type="number" id="tel_ev_is" name="tel_ev_is" ng-pattern="tel_pattern"/>
+        <span style="color:red" ng-show="form.tel_ev_is.$dirty && form.tel_ev_is.$invalid">
+          <span ng-show="form.tel_ev_is.$error.pattern">Lütfen 10 haneli bir telefon numarası girin.</span>
+      </span>
+    </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.tel_cep" placeholder="Telefon (Cep) (5xxxxxxxxx)* " type="tel" id="tel_cep" name="tel_cep" ng-pattern="cep_tel_pattern" required/>
+          <span style="color:red" ng-show="form.tel_cep.$dirty && form.tel_cep.$invalid">
+            <span ng-show="form.tel_cep.$error.required && form.tel_cep.$dirty">Cep Telefonu Numarası gereklidir.</span>
+            <span ng-show="form.tel_cep.$error.pattern">Lütfen 5 ile başlayan 10 haneli bir telefon numarası girin.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.kisisel_web" type="url" name="kisisel_web" placeholder="Kişisel Web Sitesi (http://......)"/>
+      <span style="color:red" ng-show="form.kisisel_web.$dirty && form.kisisel_web.$invalid">
+        <span ng-show="form.kisisel_web.$error.url">Lütfen geçerli bir web adresi girin.</span>
+      </span>
+    </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.ana_bd" type="text" name="ana_bd" placeholder="Ana Bilim Dalı*" required/>
+        <span style="color:red" ng-show="form.ana_bd.$dirty && form.ana_bd.$invalid">
+          <span ng-show="form.ana_bd.$error.required">Ana Bilim Dalı gereklidir.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><textarea ng-model="fields.ars_alan" name="ars_alan" placeholder="Araştırma Alanları*" required></textarea>
+        <span style="color:red" ng-show="form.ars_alan.$dirty && form.ars_alan.$invalid">
+          <span ng-show="form.ars_alan.$error.required">Araştırma Alanları gereklidir.</span>
+        </span>
+      </td>
+    </tr>
+  </table>
+  </fieldset><br>
+
+    <fieldset>
+      <legend>Yayınlarına Yapılan Atıf Sayıları (ISI Web of Science Endeksi Kullanılmalıdır)</legend>
+      <table>
+    <tr>
+      <td><input ng-model="fields.yay_say_sci" type="number" name="yay_say_sci" placeholder="Yayın Sayısı (SCI Yayınları)*" ng-pattern="integer_pattern" required></input>
+        <span style="color:red" ng-show="form.yay_say_sci.$dirty && form.yay_say_sci.$invalid">
+          <span ng-show="form.yay_say_sci.$error.required">Yayın Sayısı gereklidir.</span>
+          <span ng-show="form.yay_say_sci.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.yay_say_diger" type="number" name="yay_say_diger" placeholder="Yayın Sayısı (Diğerleri)*" ng-pattern="integer_pattern" required></input>
+        <span style="color:red" ng-show="form.yay_say_diger.$dirty && form.yay_say_diger.$invalid">
+          <span ng-show="form.yay_say_diger.$error.required">Yayın Sayısı gereklidir.</span>
+          <span ng-show="form.yay_say_diger.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.h_index" type="number" name="h_index" placeholder="H Index*" ng-pattern="integer_pattern" required></input>
+        <span style="color:red" ng-show="form.h_index.$dirty && form.h_index.$invalid">
+          <span ng-show="form.h_index.$error.required">H Index gereklidir.</span>
+          <span ng-show="form.h_index.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.atif_kendi" type="number" name="atif_kendi" placeholder="Atıf Sayısı (Kendi Tarafından)*" ng-pattern="integer_pattern" required></input>
+        <span style="color:red" ng-show="form.atif_kendi.$dirty && form.atif_kendi.$invalid">
+          <span ng-show="form.atif_kendi.$error.required">Atıf Sayısı gereklidir.</span>
+          <span ng-show="form.atif_kendi.$error.pattern">Geçersiz sayı.</span>
+        </span></td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.atif_baskasi" type="number" name="atif_baskasi" placeholder="Atıf Sayısı (Başkaları Tarafından)*" ng-pattern="integer_pattern" required></input>
+        <span style="color:red" ng-show="form.atif_baskasi.$dirty && form.atif_baskasi.$invalid">
+          <span ng-show="form.atif_baskasi.$error.required">Atıf Sayısı gereklidir.</span>
+          <span ng-show="form.atif_baskasi.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+  </table>
+  </fieldset>
+  <br>
+  <fieldset>
+    <legend>Patent Sayısı</legend>
+    <table>
+    <tr>
+      <td><input ng-model="fields.alinmis_patent" type="number" min="0" name="alinmis_patent" placeholder="Alınmış Patent Sayısı*" ng-pattern="integer_pattern" required/></input>
+        <span style="color:red" ng-show="form.alinmis_patent.$dirty && form.alinmis_patent.$invalid">
+          <span ng-show="form.alinmis_patent.$error.required">Patent Sayısı gereklidir.</span>
+          <span ng-show="form.alinmis_patent.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.patent_basvuru" type="number" min="0" name="patent_basvuru" placeholder="Sadece Başvurulmuş Patent Sayısı*" ng-pattern="integer_pattern" required/></input>
+        <span style="color:red" ng-show="form.patent_basvuru.$dirty && form.patent_basvuru.$invalid">
+          <span ng-show="form.patent_basvuru.$error.required">Başvuru Sayısı gereklidir.</span>
+          <span ng-show="form.patent_basvuru.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+  </table>
+  </fieldset>
+  <br>
+  <fieldset>
+    <legend>Proje Sayısı</legend>
+  <table>
+    <tr>
+      <td><input ng-model="fields.univ_ici_proje" type="number" min="0" name="univ_ici_proje" placeholder="Üniversite İçi Projeler*" ng-pattern="integer_pattern" required/></input>
+        <span style="color:red" ng-show="form.univ_ici_proje.$dirty && form.univ_ici_proje.$invalid">
+          <span ng-show="form.univ_ici_proje.$error.required">Proje Sayısı gereklidir.</span>
+          <span ng-show="form.univ_ici_proje.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.univ_disi_proje" type="number" min="0" name="univ_disi_proje" placeholder="Üniversite Dışı Projeler*" ng-pattern="integer_pattern" required /></input>
+        <span style="color:red" ng-show="form.univ_disi_proje.$dirty && form.univ_disi_proje.$invalid">
+          <span ng-show="form.univ_disi_proje.$error.required">Proje Sayısı gereklidir.</span>
+          <span ng-show="form.univ_disi_proje.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+  </table>
+  </fieldset>
+  <br>
+  <fieldset>
+    <legend>Yönettiği Tez Sayısı</legend>
+  <table>
+    <tr>
+      <td><input ng-model="fields.tez_lisans" type="number" min="0" name="tez_lisans"  placeholder="Lisans*" ng-pattern="integer_pattern" required/></input>
+        <span style="color:red" ng-show="form.tez_lisans.$dirty && form.tez_lisans.$invalid">
+          <span ng-show="form.tez_lisans.$error.required">Tez Sayısı gereklidir.</span>
+          <span ng-show="form.tez_lisans.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.tez_lisansustu" type="number" min="0" name="tez_lisansustu"  placeholder="Lisansüstü*" ng-pattern="integer_pattern" required/>
+        <span style="color:red" ng-show="form.tez_lisansustu.$dirty && form.tez_lisansustu.$invalid">
+          <span ng-show="form.tez_lisansustu.$error.required">Tez Sayısı gereklidir.</span>
+          <span ng-show="form.tez_lisansustu.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td><input ng-model="fields.tez_doktora" type="number" min="0" name="tez_doktora"  placeholder="Doktora*" ng-pattern="integer_pattern" required/></input>
+        <span style="color:red" ng-show="form.tez_doktora.$dirty && tez_doktora.yay_say_sci.$invalid">
+          <span ng-show="form.tez_doktora.$error.required">Tez Sayısı gereklidir.</span>
+          <span ng-show="form.tez_doktora.$error.pattern">Geçersiz sayı.</span>
+        </span>
+      </td>
+    </tr>
+  </table>
+    </fieldset>
+    <br>
+    <fieldset>
+      <legend>Ödüle Aday Olunma Gerekçesi</legend>
+      <table>
+      <tr>
+        <td><textarea ng-model="fields.gerekce" name="gerekce1" cols="20" rows="15"  placeholder="Bilime Katkı (En fazla 200 kelime)*" required></textarea>
+          Kelime sayısı: <span ng-bind="wordCount(fields.gerekce)"></span>
+        </td>
+      </tr>
+      <tr>
+        <td><textarea ng-model="fields.gerekce2" name="gerekce2" cols="20" rows="15"  placeholder="Bilimin Yayılmasına Katkı (En fazla 200 kelime)*" required></textarea>
+          Kelime sayısı: <span ng-bind="wordCount(fields.gerekce2)"></span>
+        </td>
+      </tr>
+      <tr>
+        <td><textarea ng-model="fields.gerekce3" name="gerekce3" cols="20" rows="15"  placeholder="Bilimin Toplum Yararına Kullanılmasına Katkı (En fazla 200 kelime)*" required></textarea>
+          Kelime sayısı: <span ng-bind="wordCount(fields.gerekce3)"></span>
+        </td>
+      </tr>
+    </table>
+    <div class="g-recaptcha" data-sitekey="6Le9tEoUAAAAAAXMD2-f15bR3jDfL8hiY4-tHh6X"></div>
+
+
+
+
+    <table width="100%">
+    <tr><td>
+      <script type="text/javascript">
+      document.write('<center><input type="reset" value="Sil" style="width: 50px; height: 50px; line-height: 50px; background-color:red; color:white; border: none; border-radius: 15px;"> '+
+      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submit" value="Kaydet" style="width: 100px; height: 50px; line-height: 50px; background-color:#7DC10D; color:white; border: none; border-radius: 15px;"'+
+      ' ng-disabled="!form.unvan.$valid || !form.ad.$valid || !form.soyad.$valid  ||  !form.dogum_tarihi.$valid ||  !form.dogum_yeri.$valid ||  !form.meslek.$valid || !form.eposta.$valid || '+
+      ' !form.dogum_yeri.$valid ||  !form.tel_ev_is.$valid || !form.tel_cep.$valid || !form.kisisel_web.$valid || !form.ana_bd.$valid || !form.ars_alan.$valid || !form.yay_say_sci.$valid || !form.yay_say_diger.$valid || '+
+      ' !form.h_index.$valid || !form.atif_kendi.$valid || !form.atif_baskasi.$valid || !form.alinmis_patent.$valid || !form.patent_basvuru.$valid || !form.univ_ici_proje.$valid || !form.univ_disi_proje.$valid || '+
+      ' !form.tez_lisans.$valid || !form.tez_lisansustu.$valid || !form.tez_doktora.$valid"></center>');
+      </script>
+      <noscript>
+      <p style="color: red;"><b>Formu gönderebilmek için JavaScript' i aktif hale getirin.</b><p>
+      </noscript>
+    </td></tr>
+    </table>
+			</form>
+	</div>
+	</div>
+
+<script src="js/angular_functions.js"></script>
+<script>
+$( function() {
+  $( "#dogum_tarihi" ).datepicker($.datepicker.regional[ "tr" ]);
+} );
+</script>
+</body>
+</html>
