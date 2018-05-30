@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^ybiapi/candidate$ ybiapi/api.php [QSA,NC,L]
+RewriteRule ^ybiapi/candidate/(.*)$ ybiapi/api.php?request=$1 [QSA,NC,L]
+RewriteRule ^ybiapi/upload$ ybiapi/upload.php [QSA,NC,L]
